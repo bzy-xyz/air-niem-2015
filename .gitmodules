@@ -1,0 +1,6 @@
+[submodule "rdfify"]
+	path = rdfify
+	url = git@github.mit.edu:dig/rdfify.git
+[submodule "tmswap"]
+	path = tmswap
+	url = https://github.com/mit-dig/air-reasoner.git
