@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<extern:DocumentRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/">
+
+    <nc:Person s:id="PersonBobbyBadGuy">
+        <nc:PersonName>
+            <nc:PersonGivenName>Robert</nc:PersonGivenName>
+            <nc:PersonMiddleName>Bad</nc:PersonMiddleName>
+            <nc:PersonSurName>Guy</nc:PersonSurName>
+            <nc:PersonFullName>Robert Bad Guy</nc:PersonFullName>
+        </nc:PersonName>
+    </nc:Person>
+
+    <nc:Document s:id="FakeDHSResponse">
+    
+        <nc:DocumentPrivacyActIndicator>true</nc:DocumentPrivacyActIndicator>
+        
+        <extern:DocumentSubjectPerson s:id="PersonBobbyBadGuy" />
+        
+        <nc:DocumentTitleText>
+            Request for Information
+        </nc:DocumentTitleText>
+        
+        <nc:DocumentAuthor>
+            <!-- N.B. There is NO WAY to correctly refer to an entity in another document! -->
+            <nc:EntityPerson s:id="PersonFeddyAgenti">
+                <nc:PersonName>
+                    <nc:PersonGivenName>Fred</nc:PersonGivenName>
+                    <nc:PersonMiddleName>Ral</nc:PersonMiddleName>
+                    <nc:PersonSurName>Agenti</nc:PersonSurName>
+                    <nc:PersonFullName>Fred Ral Agenti</nc:PersonFullName>
+                </nc:PersonName>
+            </nc:EntityPerson>
+        </nc:DocumentAuthor>
+        
+        <nc:DocumentIssuanceDate>
+            <nc:Date>2009-10-14</nc:Date>
+        </nc:DocumentIssuanceDate>
+        
+    </nc:Document>
+    
+    
+
+</extern:DocumentRecord>

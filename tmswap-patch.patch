@@ -1,0 +1,27 @@
+diff --git a/tmswap/policyrunner.py b/tmswap/policyrunner.py
+index add6a63..5feb9a3 100644
+--- a/tmswap/policyrunner.py
++++ b/tmswap/policyrunner.py
+@@ -1967,6 +1967,22 @@ def runPolicy(logURIs, policyURIs, logFormula=None, ruleFormula=None, filterProp
+     totalTime = now - startTime
+     totalSize = nowSize - startSize
+ 
++    global total_time, load_time, postload_time, actual_time, semantics_time
++    global semantics_parse_time
++    global total_size, load_size, postload_size, actual_size
++
++    total_time = totalTime
++    load_time = compileStartTime-startTime
++    postload_time = now-compileStartTime
++    actual_time = now-eventStartTime
++    semantics_time = llyn.total_time
++    semantics_parse_time = llyn.load_time
++
++    total_size = totalSize
++    load_size = compileStartSize-startSize
++    postload_size = nowSize-compileStartSize
++    actual_size = nowSize-eventStartSize
++
+     if verbose:
+         print 'time reasoning took=', totalTime
+         print '  of which %s was after loading, and %s was actual reasoning' % (now-compileStartTime, now-eventStartTime)

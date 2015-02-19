@@ -1,0 +1,121 @@
+var files = {
+    type:"json",
+    opts: {
+      static: [
+        { 
+          attributes:{ rel:"group" },
+          data: { title:"Fusion" },
+          state:"closed",
+          children:[
+            {
+              attributes:{ rel:"folder" },
+              data: { title:"RFI" },
+              children:[
+                {
+                  attributes:{ rel:"folder" },
+                  data: { title:"Violent Crime"},
+                  children:[
+                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"MS13",
+                          attributes:{ href:"http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/documents/MS13.pdf" }
+                          	}
+                          },
+                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"EBundy",
+                          attributes:{ href:"http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/documents/EBundy.pdf" }
+                          	}
+                          },
+/**                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"BBunny",
+                          attributes:{ href:"http://dig.csail.mit.edu/2009/DHS-fusion/documents/BBunny.pdf" }
+                          	}
+                          },
+                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"ACapone",
+                          attributes:{ href:"http://dig.csail.mit.edu/2009/DHS-fusion/documents/ACapone.pdf" }
+                          	}
+                          },
+**/
+                         ]
+               },
+             ]
+            },
+/**             {
+              attributes:{ rel:"folder" },
+              data: { title:"Copp" },
+              children:[
+                {
+                  attributes:{ rel:"folder" },
+                  data: { title:"Replies"},
+                  children:[
+                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"ToMia",
+                          attributes:{ href:"http://dig.csail.mit.edu/2010/DHS-fusion/MD/documents/Fake_MD_Response.pdf" }
+                          	}
+                          },
+			  {
+                          attributes:{ rel:"file" },
+                          data: { title:"ToMiaCore",
+                          attributes:{ href:"http://dig.csail.mit.edu/2010/DHS-fusion/MD/documents/Fake_MD_Response_core10.pdf" }
+                          	}
+                          },
+                          ]
+               },
+             ]
+            },
+**/
+           {
+              attributes:{ rel:"folder" },
+              data: { title:"Responses" },
+              children:[
+                {
+                  attributes:{ rel:"folder" },
+                  data: { title:"Agenti"},
+                  children:[
+/**                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"ACapone",
+                          attributes:{ href:"http://dig.csail.mit.edu/2009/DHS-fusion/documents/ACapone.pdf" }
+                          	}
+                          },
+                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"DBerkowitz",
+                          attributes:{ href:"http://dig.csail.mit.edu/2009/DHS-fusion/documents/DBerkowitz.pdf" }
+                          	}
+                          },
+                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"CManson",
+                          attributes:{ href:"http://dig.csail.mit.edu/2009/DHS-fusion/documents/CManson.pdf" }
+                          	}
+                          },
+**/
+                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"FeddyToMia",
+                          attributes:{ href:"http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/documents/Fake_DHS_Response.pdf" }
+                          	}
+                          },
+/**                          {
+                          attributes:{ rel:"file" },
+                          data: { title:"MauryToMia",
+                          attributes:{ href:"http://dig.csail.mit.edu/2009/DHS-fusion/documents/Synthetic.Doc.MD.Response.Request%20for%20Information.pdf" }
+                          	}
+                          },
+**/
+                          ]
+               },
+             ]
+            },
+           ]
+         }
+      ]
+    }
+  }
+

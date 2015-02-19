@@ -1,0 +1,299 @@
+<html>
+  <head>
+    <link type="text/css" href="script/themes/ui.all.css" rel="stylesheet" />
+    <link type="text/css" href="custom.css" rel="stylesheet" />
+    <script src="script/jquery-1.3.2.js" type="text/javascript"></script>
+    <script src="script/jquery.json-2.2.min.js" type="text/javascript"></script>
+    <script src="script/ui.core.js" type="text/javascript"></script>
+    <script src="script/ui.autocomplete.js" type="text/javascript"></script>
+    <script src="script/jquery.tree.min.js" type="text/javascript"></script>
+    <script src="script/jquery.rdfquery.core.min-1.0.js" type="text/javascript"></script>
+    <script src="data/senders.json" type="text/javascript"></script>
+    <script src="data/receivers.json" type="text/javascript"></script>
+    <script src="data/files.json" type="text/javascript"></script>
+    <script src="data/policies.json" type="text/javascript"></script>
+    <script src="data/data_files.json" type="text/javascript"></script>
+  </head>
+  <body>
+  <!--<img style="float:left;height:6.4em;width:25em;" src="img/logo-1.png"></img>-->
+    <div id="main" style="width:40em; padding:2px; margin-left:auto; margin-right:auto;">
+      <div id="sender" style="height:8em; border:solid 1px; margin:2px; padding:.5em">
+      	<p>Please enter the sender's URL:</p>
+        <input id="senderbox" name="senderbox" style="margin-top:1em; float:left; width:30em;"></input>
+        <img style="float:right;margin-left:.5em;margin-right:auto;height:5em;width:5em;" id="senderimg" src="img/image-x-generic.png"></img>
+      </div>
+      <div id="file" style="height:8em; border:solid 1px; margin:2px;overflow:auto;">
+        <p style="float:left;margin:2px;padding:.5em;">Please enter the data's URL, or select from the files below:</p>
+        <input id="databox" name="databox" style="width:30em;margin:.5em"></input>
+      </div>
+      <div id="recipient" style="height:8em; border:solid 1px; margin:2px; padding:.5em">
+      	<p>Please enter the recipient's URL:</p>
+        <input id="recipientbox" name="recipientbox" style="margin-top:1em; float:left; width:30em;"></input>
+        <img style="float:right;height:5em;width:5em;" id="recipientimg" src="img/image-x-generic.png"></img>
+      </div>
+      <div id="policy" style="height:6.3em; border:solid 1px; margin:2px; padding:.5em">
+      	<p>Please enter a policy's URL:</p>
+        <input id="policybox" name="policybox" style="width:30em"></input>
+      </div>
+      <div id="reasoner" style="border:solid 1px; margin: 2px; padding:.5em">
+        <p>Please select a reasoner:</p>
+        <select id="reasonerbox" name="reasonerbox" style="display:inline">
+          <option value="latest" selected="selected">Latest available</option>
+        </select>
+      </div>
+      <div id="testing" style="height:2.3em; border:solid 1px; margin:2px; padding:.5em">
+        <input type="checkbox" id="ten_times" name="ten_times" value="true"/><label for="ten_times"> 10&times;?</label>
+        <input type="checkbox" id="show_timings" name="show_timings" value="true"/><label for="show_timings"> Show timings?</label>
+        <input type="checkbox" id="show_memory" name="show_memory" value="true"/><label for="show_memory"> Show Memory Usage?</label>
+      </div>
+      <div id="should_tb" style="border:solid 1px; margin:2px; padding:.5em">
+        <table><tr>
+        <td><input type="checkbox" id="use_tabulator" name="use_tabulator" value="true"/></td>
+        <td><p style="font-size: 80%">Display results using the <a href="http://www.w3.org/2005/ajar/tab">Tabulator</a> Firefox browser extension. <br>This is the recommended way to display results, but can be disabled if you are not able to install Tabulator.</p></td>
+        </tr></table>
+      </div>
+      <div id="show_log" style="border:solid 1px; margin:2px; padding:.5em">
+        <table><tr>
+        <td><input type="checkbox" id="print_log" name="print_log" value="true"/></td>
+        <td><p style="font-size: 80%">Show the log without doing any reasoning.</p></td>
+        </tr></table>
+      </div>
+      <div id="summary" style="height:10em; border:solid 1px; margin:2px; padding:.5em">
+        <p style="margin:2px;">From: <span id="summary_sender"></span></p>
+        <p style="margin:2px;">To: <span id="summary_recipient"></span></p>
+        <p style="margin:2px;">File: <span id="summary_file"></span></p>
+        <p style="margin:2px;">Policy: <span id="summary_policy"></span></p>
+        <input style="float:right; margin-right:1em;" type="button" value="Submit" id="summary_submit"></input>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+  function isValidURL(url){
+    var RegExp = /^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/; 
+    if(RegExp.test(url)){
+        return true;
+    }else{
+        return false;
+    }
+  }
+  
+    $(document).ready(function(){
+      $('#senderbox').autocomplete({
+          data: senders,
+          matchContains:true,
+          formatItem:function(item) {
+              return "<strong>"+item.name+"</strong> "+item.email+" <br/><span style='font-size:smaller' >&lt;"+item.uri+"&gt;</span>"; 
+          },
+          formatMatch:function(item) {
+              return item.uri +" "+item.email+" "+item.name; 
+          },
+          formatResult:function(item) {
+              return item.name+" <"+item.email+">"; 
+          }
+          }).autocomplete("result",function(e,item) {
+              $('#summary_sender').html("<a target='_blank' href='"+item.uri+"'>"+item.name+ "</a> &lt;"+item.email+"&gt;");
+              senderbox.autocomplete = true;
+              var docpart = item.uri.slice(0,item.uri.indexOf('#'));
+              //var converturi = "http://convert.test.talis.com/?data-uri[]="+escape(docpart)+"&input=&output=jsonp";
+              var converturi = "http://mr-burns.w3.org/?data-uri[]="+escape(docpart)+"&input=&output=jsonp";
+              $.ajax({
+                      url: converturi, 
+                      success: function( data ) {
+                          var dbtemp = $.rdf.databank();
+                          dbtemp.load( data );
+                          var r = $.rdf({databank:dbtemp}).prefix('foaf', 'http://xmlns.com/foaf/0.1/').about("<"+item.uri+">").where( "?s foaf:depiction ?o" )
+                          if(r.get(0)) {
+                              $('#senderimg').attr('src',r.get(0).o.value);
+                          } else {
+                              r = $.rdf({databank:dbtemp}).prefix('foaf', 'http://xmlns.com/foaf/0.1/').about("<"+item.uri+">").where( "?s foaf:img ?o" )
+                              if( r.get(0) ) {
+                                  $('#senderimg').attr('src',r.get(0).o.value);
+                              } else {
+                                  $('#senderimg').attr('src','img/image-x-generic.png');
+                              }
+                          }
+                      },
+                      dataType: "jsonp"
+              });
+          });
+          
+      $('#recipientbox').autocomplete({
+          data: receivers,
+          matchContains:true,
+          formatItem:function(item) {
+              return "<strong>"+item.name+"</strong> "+item.email+" <br/><span style='font-size:smaller' >&lt;"+item.uri+"&gt;</span>"; 
+          },
+          formatMatch:function(item) {
+              return item.uri +" "+item.email+" "+item.name; 
+          },
+          formatResult:function(item) {
+              return item.name+" <"+item.email+">"; 
+          }
+          }).autocomplete("result",function(e,item) {
+              $('#summary_recipient').html("<a target='_blank' href='"+item.uri+"'>"+item.name+ "</a> &lt;"+item.email+"&gt;");
+              var docpart = item.uri.slice(0,item.uri.indexOf('#'));
+              //var converturi = "http://convert.test.talis.com/?data-uri[]="+escape(docpart)+"&input=&output=jsonp";
+              var converturi = "http://mr-burns.w3.org/?data-uri[]="+escape(docpart)+"&input=&output=jsonp";
+              $.ajax({
+                      url: converturi, 
+                      success: function( data ) {
+                          var dbtemp = $.rdf.databank();
+                          dbtemp.load( data );
+                          var r = $.rdf({databank:dbtemp}).prefix('foaf', 'http://xmlns.com/foaf/0.1/').about("<"+item.uri+">").where("?s foaf:depiction ?o" );
+                          if(r.get(0)) {
+                              $('#recipientimg').attr('src',r.get(0).o.value);
+                          } else {
+                              r = $.rdf({databank:dbtemp}).prefix('foaf', 'http://xmlns.com/foaf/0.1/').about("<"+item.uri+">").where( "?s foaf:img ?o" );
+                              if( r.get(0) ) {
+                                  $('#recipientimg').attr('src',r.get(0).o.value);
+                              } else {
+                                  $('#recipientimg').attr('src','img/image-x-generic.png');
+                              }
+                          }
+                      },
+                      dataType: "jsonp"
+              });
+          });
+
+
+
+  $('#policybox').autocomplete({
+          data: policies,
+          matchContains:true,
+          formatItem:function(item) {
+              return "<strong>"+item.name+"</strong> <br/><span style='font-size:smaller' >&lt;"+item.uri+"&gt;</span>"; 
+          },
+          formatMatch:function(item) {
+              return item.uri +" "+item.name; 
+          },
+          formatResult:function(item) {
+              return item.name; 
+          }
+          }).autocomplete("result",function(e,item) {
+              $('#summary_policy').html("<a target='_blank' href='"+item.uri+"'>"+item.name+ "</a>");
+              var policy = item.uri;
+          });
+
+
+   $('#databox').autocomplete({
+           data: data_files,
+           matchContains:true,
+           formatItem:function(item) {
+               return "<strong>"+item.name+"</strong> <br/><span style='font-size:smaller' >&lt;"+item.uri+"&gt;</span>"; 
+           },
+           formatMatch:function(item) {
+               return item.uri +" "+item.name; 
+           },
+           formatResult:function(item) {
+               return item.name; 
+           }
+           }).autocomplete("result",function(e,item) {
+               $('#summary_file').html("<a target='_blank' href='"+item.uri+"'>"+item.name+ "</a>");
+               var policy = item.uri;
+           });
+
+    function callToTabulator(sender, recipient, document, policy){
+    	  if (!isValidURL(sender) && !isValidURL(recipient) && !isValidURL(document)){        
+		  $('#summary_recipient').html("");
+		  $('#summary_sender').html("");
+		  $('#summary_file').html("");
+		  alert("The inputed URLs are invalid. Please insert a valid URLs for the desired sender, recipient and document file and try submitting again.");
+	  }else if (!isValidURL(sender) && !isValidURL(document)){
+		  $('#summary_sender').html("");
+		  $('#summary_file').html("");
+		  alert("The inputed URLs are invalid. Please insert a valid URLs for the desired sender and document file and try submitting agian.");
+	  }else if(!isValidURL(recipient) && !isValidURL(document)){
+		  $('#summary_file').html("");
+		  $('#summary_recipient').html("");
+		  alert("The inputed URLs are invalid. Please insert a valid URLs for the desired recipient and document file and try submitting again.");
+	  }else if (!isValidURL(sender) && !isValidURL(recipient)){        
+		  $('#summary_recipient').html("");
+		  $('#summary_sender').html("");
+		  alert("The inputed URLs are invalid. Please insert a valid URLs for the desired sender and recipient and try submitting again.");
+	  }else if (!isValidURL(sender)){
+		  $('#summary_sender').html("");
+		  alert("The inputed URL is invalid. Please insert a valid URL for the desired sender and try submitting agian.");
+	  //}else if(!isValidURL(recipient)){
+		//  $('#summary_recipient').html("");
+		 // alert("The inputed URL is invalid. Please insert a valid URL for the desired recipient and try submitting again.");
+	  }else if(!isValidURL(document)){
+		  $('#summary_file').html("");
+		  alert("The inputed URL is invalid. Please insert a valid URL for the desired document file and try submitting again.");
+	  }else{
+  
+	  	  //If there is an inputed pollicy and it is a valid uri, then use it.
+	  	  if(isValidURL(policybox.value)){
+	  	  	  policy = policybox.value
+	  	  	  $('#summary_policy').html("<a target='_blank' href='"+policy+"'>"+policy+ "</a>");
+	  	  }
+      var should_tabulator = $('#use_tabulator').attr('checked')
+      var show_memory = $('#show_memory').attr('checked')
+      var show_timings = $('#show_timings').attr('checked');
+      var ten_times = $('#ten_times').attr('checked');
+      var runs;
+      if (ten_times) {
+          runs = 10;
+      } else {
+          runs = 1;
+      }
+      var show_log = $('#print_log').attr('checked');
+	  	
+  
+      var kb = "http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/contrib/dhs_kb.n3" 
+      var log = "use_tabulator="+should_tabulator+"&by="+escape(sender)+"&to="+escape(recipient)+"&data="+escape(document)+"&rulesFile="+escape(policy)+"&logFile="+escape(kb)+"&reasoner="+escape($("#reasonerbox").val())+"&show_timings="+show_timings+"&show_memory="+show_memory+"&runs="+runs+"&print_log="+show_log;
+      var policyrunner = "./dhs_air_integrated.py"; // relative to this page
+      
+		  policyrunner = policyrunner + "?" + log;
+		  window.open( policyrunner );
+	  }
+    }
+    
+$('#summary_submit').click( function( e ) { 
+  var sender;
+  if($('#summary_sender').children('a:eq(0)').attr('href') == undefined){
+  	  sender = senderbox.value;
+          $('#summary_sender').html("<a target='_blank' href='"+sender+"'>"+sender+"</a>");
+  }else{
+  	  sender = $('#summary_sender').children('a:eq(0)').attr('href');
+  }
+  
+  var recipient;
+  if($('#summary_recipient').children('a:eq(0)').attr('href') == undefined){
+  	  recipient = recipientbox.value;
+  	  $('#summary_recipient').html("<a target='_blank' href='"+recipient+"'>"+recipient+"</a>");
+  }else{
+  	  recipient  = $('#summary_recipient').children('a:eq(0)').attr('href');
+  }
+
+  var document;
+  var policy;
+  if($('#summary_file').children('a:eq(0)').attr('href') == undefined){
+      document = databox.value;
+  	  $('#summary_file').html("<a href='"+document+"' target='_blank'>"+document+"</a>");
+  	  var parsed = "http://convert.test.talis.com/?data-uri[]="+escape("http://musigma.csail.mit.edu/xmpparser.py?uri="+escape(document))+"&input=rdf-xml&output=jsonp";
+  	  $.ajax({
+                   url: parsed,
+                   success: function( data ) {
+                   var dbtemp = $.rdf.databank();
+                   dbtemp.load( data );
+                   //TODO: this only works if there is a single policy file... is that what we want?
+                   var r = $.rdf({databank:dbtemp}).prefix('air','http://dig.csail.mit.edu/2009/AIR/air#').about("<"+document+">").where("?s air:policy ?o");
+                   if(r.get(0)) {
+                         $('#summary_policy').html("<a target='_blank' href='"+r.get(0).o.value.toString()+"'>"+r.get(0).o.value.toString()+"</a>");
+                         policy = r.get(0).o.value.toString();
+                   } else {
+                          $('#summary_policy').html("");
+                   }callToTabulator(sender, recipient, document, policy);
+            },
+            dataType: "jsonp"
+          });
+   }else{
+       	  document = $('#summary_file').children('a:eq(0)').attr('href');
+       	  policy = $('#summary_policy').children('a:eq(0)').attr('href');
+       	  callToTabulator(sender, recipient, document, policy);
+  }
+});
+    });
+
+  </script>
+</html>

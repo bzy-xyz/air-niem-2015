@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/">
+
+    <nc:Organization s:id="OrgCommonwealthFusionCenter">
+        <nc:OrganizationName>
+            Commonwealth Fusion Center
+        </nc:OrganizationName>
+    </nc:Organization>
+
+    <nc:Person s:id="PersonMattTechnica">
+        <nc:PersonName>
+            <nc:PersonGivenName>Matt</nc:PersonGivenName>
+            <nc:PersonSurName>Technica</nc:PersonSurName>
+            <nc:PersonFullName>Matt Technica</nc:PersonFullName>
+        </nc:PersonName>
+    </nc:Person>
+    
+    <nc:PersonCurrentEmploymentAssociation>
+        <nc:Employee s:id="PersonMattTechnica" />
+        <nc:Employer s:id="OrgCommonwealthFusionCenter" />
+        <nc:EmployeePositionName>System Administrator</nc:EmployeePositionName>
+        <nc:EmploymentStatus>
+            <nc:StatusText>Active</nc:StatusText>
+            <nc:StatusDateRange>
+                <nc:StartDate>2013-04-05</nc:StartDate>
+            </nc:StatusDateRange>
+        </nc:EmploymentStatus>
+    </nc:PersonCurrentEmploymentAssociation>
+    
+    
+
+</extern:PersonnelRecord>

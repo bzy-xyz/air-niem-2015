@@ -1,0 +1,5 @@
+
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+<http://dig.csail.mit.edu/2010/DHS-fusion/MA/rules/MGL_6-172_ONT#section_head> owl:sameAs <http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/rules/5_USC_552a_ONT#headOf>.
+

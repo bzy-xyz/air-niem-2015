@@ -1,0 +1,199 @@
+########Namespaces########
+
+#Default Namespace
+@prefix : <file:///home/bzy/Documents/FakeDHSResponseRule.n3#>.
+
+#rules is an alias for :
+@prefix rules: <#>.
+
+#AIR
+@prefix air: <http://dig.csail.mit.edu/TAMI/2007/amord/air#>.
+
+#owl
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+#log
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+#FOAF
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# extern
+# replace this with the actual instance ontology
+@prefix extern: <http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/> .
+
+# fusion
+@prefix fusion: <http://dig.csail.mit.edu/2010/DHS-fusion/common/fusion_ONT#> .
+@prefix ont: <http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/rules/5_USC_552a_ONT#> .
+
+# NIEM Core
+@prefix nc: <http://release.niem.gov/niem/niem-core/3.0/> .
+
+###Policy###
+
+@forAll :SENDER, :RECEIVER, :DOCUMENT, :REQUEST, :ORGANIZATION, :JOB_TITLE, :MEMBERSHIP.
+@forAll :P.
+
+
+# defining subjectives
+
+:SENDER air:subjective_term air:Sender.
+:RECEIVER air:subjective_term air:Receiver.
+:DOCUMENT air:subjective_term air:Data.
+:REQUEST air:subjective_term air:Transaction.
+
+:The_Privacy_Act_of_1974_552a_b_s1a_law_enforcement a air:Subjective;
+    air:description ("Authorized civil or criminal law enforcement activity is the purpose of the transaction.");
+    air:statement { :REQUEST ont:purpose ont:law_enforcement }.
+
+
+
+:MyPolicy a air:Policy;
+    air:rule :Org_Membership;
+    air:rule :Job_Title;
+    air:rule :init_b;
+    fusion:transaction_ontology "http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/rules/5_USC_552a_ONT".
+
+:Org_Membership a air:Belief-rule;
+    rdfs:comment "Discover recipient agency affiliation.";
+    air:if {
+        :REQUEST a ont:Disseminate;
+            ont:to :RECEIVER.
+        :RECEIVER a nc:PersonType.
+        @forSome :employmentAssociation.
+        :employmentAssociation nc:Employee :RECEIVER;
+            nc:Employer :ORGANIZATION.
+    };
+    air:then [
+        air:assert [air:statement {:RECEIVER foaf:member :ORGANIZATION.} ]
+        #air:assert [air:statement {:REQUEST air:compliant-with :MyPolicy.} ]
+    ].
+
+# pulling a CURRENT job title from an employment association
+# (assuming this is how it is done)    
+# TODO: may need to associate job title with organization (make sure right section head)
+:Job_Title a air:Belief-rule;
+    rdfs:comment "Discover recipient job title.";
+    air:if {
+        :REQUEST a ont:Disseminate;
+            ont:to :RECEIVER.
+        :RECEIVER a nc:PersonType.
+        @forSome :employmentAssociation.
+        [nc:PersonCurrentEmploymentAssociation :employmentAssociation].
+        :employmentAssociation nc:Employee :RECEIVER;
+            nc:Employer :ORGANIZATION;
+            nc:EmployeePositionName :JOB_TITLE.
+    };
+    air:then [
+        air:assert [air:statement {:RECEIVER extern:job_title :JOB_TITLE.} ]
+    ].
+
+# begin adapted policy rules
+:init_b a air:Belief-rule;
+	air:if {
+		:REQUEST a ont:Disseminate;
+		    ont:by :SENDER;
+            ont:to :RECEIVER;
+            ont:data :DOCUMENT.
+#		:SENDER log:includes { :S foaf:government_type pri:US_Federal_Agency. }.
+#		XXX Not converted to log:semantics or owl:Entails yet.
+#		:P a pri:US_Person.
+#		:SR a pri:System_of_Records.
+#		:INFO pri:contained_in :SR.
+		};
+	air:then [air:rule :The_Privacy_Act_of_1974_5_USC_552a_b_c01].
+
+:The_Privacy_Act_of_1974_5_USC_552a_b_c01 a air:Belief-rule;
+	rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a (b) c01";
+	rdfs:comment "No agency shall disclose any record which is contained in a system of records by any means of communication to any person, or to another agency";
+	air:if {
+		:REQUEST ont:data :DOCUMENT.
+		# TODO this is contrived, is there a more natural way to detect PII?
+		:DOCUMENT extern:DocumentSubjectPerson :P.
+		};	
+	air:then [
+		air:description ( "Because" :DOCUMENT " contains PII about " :P ", disclosure cannot be made except under specifically defined conditions. 5 USC 552a(b).");
+#		air:rule :DEBUG];
+#		air:rule :The_Privacy_Act_of_1974_5_USC_552a_b7;];
+		air:rule :PRI_b7_Govt_Agency;];
+	air:else [
+		air:description ( "Because" :DOCUMENT " does not appear to contain PII or is not about a person, it is not covered by the Privacy Act. 5 USC 552a(b).");
+		air:assert [air:statement {:SENDER air:compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b_c01.}]].
+		
+:The_Privacy_Act_of_1974_5_USC_552a_b7 a air:Belief-rule;
+	rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a (b)(7)";
+	rdfs:comment "No agency shall disclose any record which is contained in a system of records by any means of communication to any person, or to another agency, except pursuant to a written request by, or with the prior written consent of, the individual to whom the record pertains, unless disclosure of the record would be to another agency or to an instrumentality of any governmental jurisdiction within or under the control of the United States for a civil or criminal law enforcement activity if the activity is authorized by law, and if the head of the agency or instrumentality has made a written request to the agency which maintains the record specifying the particular portion desired and the law enforcement activity for which the record is sought";
+	air:if {
+	    # Later verify the system of records matches the one we care about.
+	    # :SENDER log:includes { :SENDER pri:maintains :SR }. 
+	    # XXX Does this test want to be earlier?
+	    # K - yes, this should be an early belief rule to determine both 
+	    # :INFO is in an :SR; failure results in "not covered by the Privacy Act" (something we need to do later) 
+	    # :S is from the agency maintaining :SR; failure results in "not covered by the Privacy Act".
+	    
+	    # TODO update this
+	    # We short-circuit this rule for now
+	    };
+	air:then [
+	    air:description ( :SR " is maintained by " :SENDER "." );
+	    air:rule :PRI_b7_Govt_Agency
+	];
+	air:else [
+	    air:description ( :SENDER " does not maintain a system of records. 5 USC 552a(b).");
+	    air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
+
+:PRI_b7_Govt_Agency a air:Belief-rule;
+	air:if{
+	    :RECEIVER foaf:member :ORGANIZATION.
+	    # TODO implement agency checking
+	    #@forSome :agency_list.
+        #    govt_agencies:Agencies log:semantics :agency_list.
+	    #:agency_list log:includes { govt_agencies:Agencies foaf:Organization :MEMBERSHIP. }.
+	    };
+	air:then [
+            air:description (:RECEIVER " is a member of " :ORGANIZATION ", a government agency or instrumentality under the control of the US, one of the requirements of 5 USC 552a(b)(7).");
+	    air:rule :PRI_b7_Law_Enforcement_Purpose
+	];
+	air:else [
+            air:description (:RECEIVER " is not a member of a government agency or instrumentality of the type required by 5 USC 552a(b)(7).");
+	    air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
+	
+:PRI_b7_Law_Enforcement_Purpose a air:Belief-rule;
+	air:if{
+	    :REQUEST ont:purpose ont:law_enforcement.
+	    };
+	air:then [
+            air:description (:REQUEST " has law enforcement purpose, one of the requirements of 5 USC 552a(b)(7).");
+	    air:rule :PRI_b7_Has_Title
+	];
+	air:else [
+            air:description (:REQUEST " purpose does not match Law Enforcement, one of the requirements of 5 USC 552a(b)(7).");
+	    air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
+	
+:PRI_b7_Has_Title a air:Belief-rule;
+	air:if {
+	    :RECEIVER extern:job_title :JOB_TITLE.
+	    };
+	air:then [
+	    air:description (:RECEIVER " has job title " :JOB_TITLE "." );
+	    air:rule :PRI_b7_Head_of_Agency
+	];
+	air:else [
+	    air:description (:RECEIVER " has no job title.  Cannot evaluate whether" :R "is head of an organization, one of the requirements of 5 USC 552a(b)(7).");
+	    air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
+	    
+:PRI_b7_Head_of_Agency a air:Belief-rule;
+	air:if{
+        # TODO this is contrived; implement list of valid head-of-agency titles
+        :RECEIVER extern:job_title "Agency Head".
+	    };
+	air:then [
+		air:description (:SENDER " can give " :DOCUMENT " to " :RECEIVER ", because it is being used for an authorized law enforcement activity and the head of the recipient agency has filed the appropriate written request, meeting the requirements of 5 USC 552a(b)(7).");
+		air:assert [air:statement {:SENDER air:compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]];
+	air:else [
+		air:description ( "Requestor" :RECEIVER "'s job title " :JOB_TITLE " does not match Agency Head, one of the requirements of 5 USC 552a(b)(7).");
+		air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
+		
+
