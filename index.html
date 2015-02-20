@@ -35,7 +35,7 @@
       	<p>Please enter a policy's URL:</p>
         <input id="policybox" name="policybox" style="width:30em"></input>
       </div>
-      <div id="reasoner" style="border:solid 1px; margin: 2px; padding:.5em">
+      <div id="reasoner" style="display: none; border:solid 1px; margin: 2px; padding:.5em">
         <p>Please select a reasoner:</p>
         <select id="reasonerbox" name="reasonerbox" style="display:inline">
           <option value="latest" selected="selected">Latest available</option>
@@ -46,9 +46,9 @@
         <input type="checkbox" id="show_timings" name="show_timings" value="true"/><label for="show_timings"> Show timings?</label>
         <input type="checkbox" id="show_memory" name="show_memory" value="true"/><label for="show_memory"> Show Memory Usage?</label>
       </div>
-      <div id="should_tb" style="border:solid 1px; margin:2px; padding:.5em">
+      <div id="should_tb" style="border:solid 1px; margin:2px; padding:.5em; display: none">
         <table><tr>
-        <td><input type="checkbox" id="use_tabulator" name="use_tabulator" value="true"/></td>
+        <td><input type="checkbox" id="use_tabulator" name="use_tabulator" value="true" /></td>
         <td><p style="font-size: 80%">Display results using the <a href="http://www.w3.org/2005/ajar/tab">Tabulator</a> Firefox browser extension. <br>This is the recommended way to display results, but can be disabled if you are not able to install Tabulator.</p></td>
         </tr></table>
       </div>
