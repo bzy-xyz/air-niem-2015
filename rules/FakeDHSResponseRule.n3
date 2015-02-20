@@ -1,7 +1,7 @@
 ########Namespaces########
 
 #Default Namespace
-@prefix : <file:///home/bzy/Documents/FakeDHSResponseRule.n3#>.
+@prefix : <http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/rules/FakeDHSResponseRule.n3#>.
 
 #rules is an alias for :
 @prefix rules: <#>.
