@@ -22,17 +22,17 @@ _html_template_str = """
 <head>
     <title>${page_title}</title>
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-    <link type="text/css" href="/css/simpletab.css" rel="stylesheet">
+    <link type="text/css" href="css/simpletab.css" rel="stylesheet">
 
     <script type="text/javascript" language="JavaScript">
      function ToggleContent(d) {
         var text_element = document.getElementById("td_"+d);
         var img_element = document.getElementById("img_"+d);
         if (text_element.getAttribute('style') == 'display: none;') {
-            img_element.setAttribute('src', "/img/tbl-collapse.png" )
+            img_element.setAttribute('src', "img/tbl-collapse.png" )
             text_element.setAttribute('style', 'display:block');
         } else {
-            img_element.setAttribute('src', "/img/tbl-expand-trans.png" )
+            img_element.setAttribute('src', "img/tbl-expand-trans.png" )
             text_element.setAttribute('style', 'display:none');
     }}
     </script>
@@ -41,15 +41,15 @@ _html_template_str = """
 
 <table id="outline"><tr style="vertical-align: top;"><td class="obj" about="${outline_title}">
     <table style="background-color: white;"><tr><td>
-        <img title="Hide details." alt="collapse" src="/img/tbl-collapse.png">
-        <strong>${outline_title}<img class="paneShown" title="Lawyer's View" alt="Lawyer's View" src="/img/law.jpg"></strong>
+        <img title="Hide details." alt="collapse" src="img/tbl-collapse.png">
+        <strong>${outline_title}<img class="paneShown" title="Lawyer's View" alt="Lawyer's View" src="img/law.jpg"></strong>
     </td></tr></table>
 </td></tr></table>
 
 <div class="title" id="div_issue">
 <table><tr>
     <td><a href="javascript:ToggleContent('1')">
-    <img id="img_1" src="/img/tbl-collapse.png"></a></td>
+    <img id="img_1" src="img/tbl-collapse.png"></a></td>
     <td>Issue:</td>
 </tr></table>
 </div>
@@ -65,7 +65,7 @@ _html_template_str = """
 <div class="title" id="div_rule">
 <table><tr>
     <td><a href="javascript:ToggleContent('2')">
-    <img id="img_2" src="/img/tbl-collapse.png"></a></td>
+    <img id="img_2" src="img/tbl-collapse.png"></a></td>
     <td>Rule:</td></tr>
 </table></div>
 <div class="irfac" id="td_2">
@@ -78,7 +78,7 @@ _html_template_str = """
 <div class="title" id="div_results">
 <table><tr>
     <td><a href="javascript:ToggleContent('3')">
-    <img id="img_3" src="/img/tbl-collapse.png"></a></td>
+    <img id="img_3" src="img/tbl-collapse.png"></a></td>
     <td>Results:</td></tr>
 </table></div>
 <div class="irfac" id="td_3">
@@ -95,7 +95,7 @@ _html_template_str = """
 _html_template_str_inner = """
 <table><tr>
     <td><a href="javascript:ToggleContent('${analysis_index}')">
-    <img id="img_${analysis_index}" src="/img/tbl-collapse.png"></a></td>
+    <img id="img_${analysis_index}" src="img/tbl-collapse.png"></a></td>
     <td>Analysis ${results_index}:</td>
 </tr></table>
 <div class="irfac" id="td_${analysis_index}">
@@ -108,7 +108,7 @@ _html_template_str_inner = """
 
 <table><tr>
     <td><a href="javascript:ToggleContent('${conclusion_index}')">
-    <img id="img_${conclusion_index}" src="/img/tbl-collapse.png"></a></td>
+    <img id="img_${conclusion_index}" src="img/tbl-collapse.png"></a></td>
     <td>Conclusion ${results_index}:</td>
 </tr></table>
 <div class="irfac" id="td_${conclusion_index}">
@@ -128,10 +128,15 @@ _rdfs_prefix = "http://www.w3.org/2000/01/rdf-schema"
 _air_prefix = "http://dig.csail.mit.edu/TAMI/2007/amord/air"
 _tms_prefix = "http://dig.csail.mit.edu/TAMI/2007/amord/tms"
 
+_rdfify_prefix = "http://dig.csail.mit.edu/2014/rdfify/schema"
+
 _label_predicate = "%s#label" % _rdfs_prefix
 
 _air_compliant_with = "%s#compliant-with" % _air_prefix
 _air_non_compliant_with = "%s#non-compliant-with" % _air_prefix
+
+_rdfify_forcerun = "%s#FORCE_RULE_RUN" % _rdfify_prefix
+
 _tms_justify = "%s#justification" % _tms_prefix
 _tms_description = "%s#description" % _tms_prefix
 _tms_rule_name = "%s#rule-name" % _tms_prefix
@@ -231,7 +236,7 @@ def render_subjects(subjects):
     
 def render_conclusions(conclusions):
     output = []
-    template = ('\t\t<tr><td>The transaction - </td>'
+    template = ('\t\t<tr><td></td>'
                 '<td><a href="%s">%s</a></td><td> is </td>'
                 '<td>%s</td><td><a href="%s">%s</a></td></tr>')
     for item in conclusions:
@@ -315,7 +320,10 @@ def render_law(justifications = None, uri = None, policy = None):
                 non_compliant_pred = context.newSymbol(_air_non_compliant_with)
                 foo = clause.predicate()
                 if foo == compliant_pred or foo == non_compliant_pred:
-                    conclusions.append(clause)
+                    # Hack to hide anything we don't want the user to see
+                    bar = clause.object()
+                    if bar != context.newSymbol(_rdfify_forcerun):
+                        conclusions.append(clause)
             # This will extract the remaining rules relevant to the justification(s).
             if type(justify_stmts[stmt]).__name__ =="AnonymousExistential":
                 rule_name_pred = source_context.newSymbol(_tms_rule_name)

@@ -966,7 +966,7 @@ def run_reasoner(q, form):
        #return
     else:
         html_output = render_law_multiple.render_law(
-            reasoner_str_list, 'uri_str', rule_uris[0])
+            reasoner_str_list, 'Compliance Assessment', rule_uris[0])
         #return ('text/html', html_output)
         q.put(('text/html', html_output))
         return
