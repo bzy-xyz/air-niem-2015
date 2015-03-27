@@ -35,7 +35,7 @@ def merge(files, additional_xml_schemata):
             try:
                 tr = lxml.etree.parse(f)
                 r = tr.getroot()
-                rdfify2.extractRDFGraphWithSchemaInPlace(g, s, sdata, r, additional_xml_schemata, g.absolutize(f))
+                rdfify2.extractRDFGraphWithSchemaInPlace(g, s, sdata, r, additional_xml_schemata, f.split('#')[0])
             # if even that doesn't work, give up
             except:
                 raise
@@ -45,11 +45,12 @@ def merge(files, additional_xml_schemata):
 def main():
     argparser = argparse.ArgumentParser()
     argparser.add_argument('-s','--include-xml-schema', action='append')
+    argparser.add_argument('-o','--outfile',default=None)
     argparser.add_argument('infile', nargs='+')
     
     args = argparser.parse_args()
     
-    g, s = merge(args.infile, args.include_xml_schema)
+    g, s = merge(args.infile, args.include_xml_schema, args.outfile if args.outfile else "")
     
     #print "exporting"
     
@@ -68,7 +69,9 @@ def main():
     g.parse(stmp.name, format='n3')
     g.parse(gtmp.name, format='n3')
     
-    print g.serialize(format='n3')
+    o = open(args.outfile, 'w')
+    
+    o.write(g.serialize(format='n3'))
     
 if __name__ == "__main__":
     main()

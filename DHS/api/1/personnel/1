@@ -7,17 +7,25 @@
         </nc:OrganizationName>
     
         <nc:OrganizationSubUnit s:id="OrgDHSICE" />
+        
+        <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
     </nc:Organization>
     
     <!-- DHS Immigration and Customs Enforcement -->
-    <!-- discovered from ????? -->
     <nc:Organization s:id="OrgDHSICE">
         <nc:OrganizationName>
             Immigration and Customs Enforcement
         </nc:OrganizationName>
         
         <nc:OrganizationParent s:id="OrgDHS" />
+        
+        <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
     </nc:Organization>
+    
+    <extern:RecordSystem s:id="RecordSystemDHSICE">
+        <nc:SystemName>DHS ICE System of Records</nc:SystemName>
+        <nc:OrganizationParent s:id="OrgDHSICE" />
+    </extern:RecordSystem>
 
     <nc:Person s:id="PersonFeddyAgenti">
         <nc:PersonName>
@@ -40,6 +48,12 @@
         </nc:EmploymentStatus>
     </nc:PersonCurrentEmploymentAssociation>
     
+    <extern:SystemAuthorization>
+        <extern:SystemAuthorizationSubject s:id="PersonFeddyAgenti" />
+        <extern:SystemAuthorizationObject s:id="RecordSystemDHSICE" />
+        <extern:SystemAuthorizationRole>Read</extern:SystemAuthorizationRole>
+        <extern:SystemAuthorizationRole>Write</extern:SystemAuthorizationRole>
+    </extern:SystemAuthorization>
     
 
 </extern:PersonnelRecord>

@@ -5,6 +5,7 @@
         <nc:OrganizationName>
             Commonwealth Fusion Center
         </nc:OrganizationName>
+        <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
     </nc:Organization>
 
     <nc:Person s:id="PersonMattTechnica">
