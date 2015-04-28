@@ -1,26 +1,6 @@
 <?xml version="1.0"?>
-<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/">
+<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised-nodiscover/extern/">
 
-    <nc:Organization s:id="OrgDHS">
-        <nc:OrganizationName>
-            Department of Homeland Security
-        </nc:OrganizationName>
-
-        <nc:OrganizationSubUnit s:id="OrgDHSICE" />
-
-        <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
-    </nc:Organization>
-
-    <!-- DHS Immigration and Customs Enforcement -->
-    <nc:Organization s:id="OrgDHSICE">
-        <nc:OrganizationName>
-            Immigration and Customs Enforcement
-        </nc:OrganizationName>
-
-        <nc:OrganizationParent s:id="OrgDHS" />
-
-        <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
-    </nc:Organization>
 
     <extern:RecordSystem s:id="RecordSystemDHSICE">
         <nc:SystemName>DHS ICE System of Records</nc:SystemName>
@@ -34,14 +14,44 @@
             <nc:PersonSurName>Agenti</nc:PersonSurName>
             <nc:PersonFullName>Fred Ral Agenti</nc:PersonFullName>
         </nc:PersonName>
+        <nc:PersonDigitalImage>
+            <nc:BinaryURI>http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/profiles/generic_man.jpg</nc:BinaryURI>
+        </nc:PersonDigitalImage>
+        <nc:PersonSexText>M</nc:PersonSexText>
     </nc:Person>
 
     <nc:PersonCurrentEmploymentAssociation>
         <nc:Employee s:id="PersonFeddyAgenti" />
         <nc:Employer>
-            <nc:EntityOrganization s:id="OrgDHSICE" />
+            <nc:EntityOrganization s:id="OrgDHSICE" >
+                <nc:OrganizationName>DHS Immigration and Customs Enforcement</nc:OrganizationName>
+            </nc:EntityOrganization>
         </nc:Employer>
         <nc:EmployeePositionName>Special Agent</nc:EmployeePositionName>
+        <nc:EmploymentContactInformation>
+            <nc:ContactEmailID>fed@dhs.us.gov</nc:ContactEmailID>
+        </nc:EmploymentContactInformation>
+        <nc:EmploymentLocation>
+            <nc:Address>
+                <nc:AddressFullText>601 W 26th St, 2d floor</nc:AddressFullText>
+                <nc:LocationCityName>New York</nc:LocationCityName>
+                <nc:LocationStateName>NY</nc:LocationStateName>
+                <nc:LocationCountryName>USA</nc:LocationCountryName>
+                <nc:LocationPostalCode>10001</nc:LocationPostalCode>
+            </nc:Address>
+            <nc:Location2DGeospatialCoordinate>
+                <nc:GeographicCoordinateLatitude>
+                    <nc:LatitudeDegreeValue>40</nc:LatitudeDegreeValue>
+                    <nc:LatitudeMinuteValue>45</nc:LatitudeMinuteValue>
+                    <nc:LatitudeSecondValue>12</nc:LatitudeSecondValue>
+                </nc:GeographicCoordinateLatitude>
+                <nc:GeographicCoordinateLongitude>
+                    <nc:LongitudeDegreeValue>-74</nc:LongitudeDegreeValue>
+                    <nc:LongitudeMinuteValue>0</nc:LongitudeMinuteValue>
+                    <nc:LongitudeSecondValue>0</nc:LongitudeSecondValue>
+                </nc:GeographicCoordinateLongitude>
+            </nc:Location2DGeospatialCoordinate>
+        </nc:EmploymentLocation>
         <nc:EmploymentStatus>
             <nc:StatusText>Active</nc:StatusText>
             <nc:StatusDateRange>
