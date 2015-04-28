@@ -1,62 +1,5 @@
 <?xml version="1.0"?>
-<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/">
-
-    <nc:Organization s:id="OrgCommonwealthFusionCenter">
-        <nc:OrganizationLocation>
-            <nc:Address>
-                <nc:AddressFullText>124 Acton Street</nc:AddressFullText>
-                <nc:LocationCityName>Maynard</nc:LocationCityName>
-                <nc:LocationStateName>MA</nc:LocationStateName>
-                <nc:LocationCountryName>USA</nc:LocationCountryName>
-                <nc:LocationPostalCode>01754</nc:LocationPostalCode>
-            </nc:Address>
-            <nc:Location2DGeospatialCoordinate>
-                <nc:GeographicCoordinateLatitude>
-                    <nc:LatitudeDegreeValue>42</nc:LatitudeDegreeValue>
-                    <nc:LatitudeMinuteValue>25</nc:LatitudeMinuteValue>
-                    <nc:LatitudeSecondValue>57</nc:LatitudeSecondValue>
-                </nc:GeographicCoordinateLatitude>
-                <nc:GeographicCoordinateLongitude>
-                    <nc:LongitudeDegreeValue>-71</nc:LongitudeDegreeValue>
-                    <nc:LongitudeMinuteValue>27</nc:LongitudeMinuteValue>
-                    <nc:LongitudeSecondValue>21</nc:LongitudeSecondValue>
-                </nc:GeographicCoordinateLongitude>
-            </nc:Location2DGeospatialCoordinate>
-        </nc:OrganizationLocation>
-        <nc:OrganizationName>
-            Commonwealth Fusion Center
-        </nc:OrganizationName>
-        <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
-        <extern:PRIb7Policy>http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/CFC/api/1/rules/PRIb7Policy</extern:PRIb7Policy>
-    </nc:Organization>
-
-    <nc:Organization s:id="OrgMassStatePolice">
-        <nc:OrganizationLocation>
-            <nc:Address>
-                <nc:AddressFullText>124 Acton Street</nc:AddressFullText>
-                <nc:LocationCityName>Maynard</nc:LocationCityName>
-                <nc:LocationStateName>MA</nc:LocationStateName>
-                <nc:LocationCountryName>USA</nc:LocationCountryName>
-                <nc:LocationPostalCode>01754</nc:LocationPostalCode>
-            </nc:Address>
-            <nc:Location2DGeospatialCoordinate>
-                <nc:GeographicCoordinateLatitude>
-                    <nc:LatitudeDegreeValue>42</nc:LatitudeDegreeValue>
-                    <nc:LatitudeMinuteValue>25</nc:LatitudeMinuteValue>
-                    <nc:LatitudeSecondValue>57</nc:LatitudeSecondValue>
-                </nc:GeographicCoordinateLatitude>
-                <nc:GeographicCoordinateLongitude>
-                    <nc:LongitudeDegreeValue>-71</nc:LongitudeDegreeValue>
-                    <nc:LongitudeMinuteValue>27</nc:LongitudeMinuteValue>
-                    <nc:LongitudeSecondValue>21</nc:LongitudeSecondValue>
-                </nc:GeographicCoordinateLongitude>
-            </nc:Location2DGeospatialCoordinate>
-        </nc:OrganizationLocation>
-        <nc:OrganizationName>
-            Massachusetts State Police
-        </nc:OrganizationName>
-        <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
-    </nc:Organization>
+<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised-nodiscover/extern/">
 
     <nc:Person s:id="PersonMiaAnalysa">
         <nc:PersonName>
@@ -73,7 +16,9 @@
     <nc:PersonCurrentEmploymentAssociation>
         <nc:Employee s:id="PersonMiaAnalysa" />
         <nc:Employer>
-            <nc:EntityOrganization s:id="OrgCommonwealthFusionCenter" />
+            <nc:EntityOrganization s:id="OrgCommonwealthFusionCenter">
+                <nc:OrganizationName>Commonwealth Fusion Center</nc:OrganizationName>
+            </nc:EntityOrganization>
         </nc:Employer>
         <nc:EmployeePositionName>Intelligence Analyst</nc:EmployeePositionName>
         <nc:EmploymentLocation>
@@ -109,7 +54,9 @@
     <nc:PersonCurrentEmploymentAssociation>
         <nc:Employee s:id="PersonMiaAnalysa" />
         <nc:Employer>
-            <nc:EntityOrganization s:id="OrgMassStatePolice" />
+            <nc:EntityOrganization>
+                <nc:OrganizationName>Massachusetts State Police</nc:OrganizationName>
+            </nc:EntityOrganization>
         </nc:Employer>
         <nc:EmployeePositionName>Intelligence Analyst</nc:EmployeePositionName>
         <nc:EmploymentContactInformation>
