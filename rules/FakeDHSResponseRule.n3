@@ -1,7 +1,7 @@
 ########Namespaces########
 
 #Default Namespace
-@prefix : <http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/rules/FakeDHSResponseRule.n3#>.
+@prefix : <http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/rules/FakeDHSResponseRule.n3#>.
 
 #rules is an alias for :
 @prefix rules: <#>.
@@ -22,7 +22,7 @@
 
 # extern
 # replace this with the actual instance ontology
-@prefix extern: <http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/> .
+@prefix extern: <http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/> .
 
 # rdfify
 @prefix rdfify: <http://dig.csail.mit.edu/2014/rdfify/schema#> .
@@ -33,6 +33,18 @@
 
 # NIEM Core
 @prefix nc: <http://release.niem.gov/niem/niem-core/3.0/> .
+
+## bzy HACK: the Privacy Act is not supposed to be aware of the OMB impl guide,
+## but we add it here for engineering simplicity reasons
+@prefix pri_impl: <http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/rules/40_FR_28948#>.
+@prefix pri_impl_ont: <http://link.csail.mit.edu/projects/devel/2015/air-demo-dhs-devel/US/DHS/rules/40_FedReg_28948_ONT#>.
+
+
+### Metadata ###
+## bzy: adding metadata to support shortname condensation
+<>
+    rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a".
+
 
 ###Policy###
 
@@ -51,9 +63,79 @@
     air:description ("Authorized civil or criminal law enforcement activity is the purpose of the transaction.");
     air:statement { :REQUEST ont:purpose ont:law_enforcement }.
 
+:The_Privacy_Act_of_1974_552a_b_s1b_compulsory_legal_process a air:Subjective;
+    air:description ("Compulsory legal process is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:compulsory_legal_process }.
 
+# K says - need to review to determine if Need to Know and Performance of Duties should be represented separately here and in the belief rule.
 
-:MyPolicy a air:Policy;
+:The_Privacy_Act_of_1974_552a_b_s1c_Need_to_Know a air:Subjective;
+    air:description ("Need to know is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Need_to_Know }.
+
+:The_Privacy_Act_of_1974_552a_b_s1d_performance_of_duties a air:Subjective;
+    air:description ("Performance of duties is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:performance_of_duties }.
+
+:The_Privacy_Act_of_1974_552a_b_s1e_Acknowledgment a air:Subjective;
+    air:description ("Notification for the purpose of acknowledgment is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Acknowledgment }.
+
+:The_Privacy_Act_of_1974_552a_b_s1f_Census a air:Subjective;
+    air:description ("Information given for the purposes of carrying out a census is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Census }.
+
+:The_Privacy_Act_of_1974_552a_b_s1g_routine_use a air:Subjective;
+    air:description ("Routine use, compatible with the purpose for which it was collected,  is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:routine_use }.
+
+:The_Privacy_Act_of_1974_552a_b_s1h_FOIA_5_USC_552 a air:Subjective;
+    air:description ("Freedom of information act, FOIA_5_USC_552 is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:FOIA_5_USC_552 }.
+
+:The_Privacy_Act_of_1974_552a_b_s1i_Stats_Research a air:Subjective;
+    air:description ("Statistical research  is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Stats_Research }.
+
+:The_Privacy_Act_of_1974_552a_b_s1j_Historical_Record a air:Subjective;
+    air:description ("Historical record is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Historical_Record }.
+
+:The_Privacy_Act_of_1974_552a_b_s1k_adverse_determination a air:Subjective;
+    air:description ("Adverse determination, decision with a negative impact on the subject, is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:adverse_determination }.
+
+:The_Privacy_Act_of_1974_552a_b_s1l_Archivists_Evaluation a air:Subjective;
+    air:description ("Evaluation by the Archivist or his designee is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Archivists_Evaluation }.
+
+:The_Privacy_Act_of_1974_552a_b_s1m_health_safety a air:Subjective;
+    air:description ("Information given affecting health or safety of an individual is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:health_safety }.
+
+:The_Privacy_Act_of_1974_552a_b_s1n_Refusal a air:Subjective;
+    air:description ("Notification of a refusal to alter a document or comply with a request is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Refusal }.
+
+:The_Privacy_Act_of_1974_552a_b_s1o_Review a air:Subjective;
+    air:description ("Review of a decision not to amend is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:Review }.
+
+:The_Privacy_Act_of_1974_552a_b_s1p_relevant_to_agency a air:Subjective;
+    air:description ("Relevant to purpose of agency is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:relevant_to_agency }.
+
+:The_Privacy_Act_of_1974_552a_b_s1q_31_USC_3711e a air:Subjective;
+    air:description ("Providing information to a consumer reporting agency in accordance with section 3711(e) of Title 31 is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:31_USC_3711e }.
+
+:The_Privacy_Act_of_1974_552a_b_s1r_MatchingAgreement a air:Subjective;
+    air:description ("Matching Ageement is the purpose of the transaction.");
+    air:statement { :EVENT ont:purpose ont:MatchingAgreement }.
+
+:The_Privacy_Act_of_1974_5_USC_552a_b a air:Policy;
+    rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a (b)";
+	rdfs:comment "No agency shall disclose any record which is contained in a system of records by any means of communication to any person, or to another agency";
     air:rule :AgencyHead_Requestor_Authority;
     air:rule :Org_Membership;
     air:rule :Org_Membership_Sender;
@@ -69,13 +151,12 @@
         :RECEIVER a nc:PersonType.
         @forSome :employmentAssociation.
         :employmentAssociation nc:Employee :RECEIVER;
-            nc:Employer :ORGANIZATION.
+            nc:Employer [nc:EntityOrganization :ORGANIZATION].
     };
     air:then [
         air:assert [air:statement {:RECEIVER foaf:member :ORGANIZATION.} ]
-        #air:assert [air:statement {:REQUEST air:compliant-with :MyPolicy.} ]
     ].
-    
+
 :Org_Membership_Sender a air:Belief-rule;
     rdfs:comment "Discover sender agency affiliation.";
     air:if {
@@ -84,14 +165,19 @@
         :SENDER a nc:PersonType.
         @forSome :employmentAssociation.
         :employmentAssociation nc:Employee :SENDER;
-            nc:Employer :SR_ORG.
+            nc:Employer [nc:EntityOrganization :SR_ORG].
     };
+
+    ## bzy HACK: force rule to run (air:else apparently shields this rule from running normally o_O)
+    air:then [
+        air:assert [air:statement {:SENDER air:compliant-with rdfify:FORCE_RULE_RUN.} ]
+    ];
     air:then [
         air:assert [air:statement {:SENDER foaf:member :SR_ORG.} ]
     ].
 
 # pulling a CURRENT job title from an employment association
-# (assuming this is how it is done)    
+# (assuming this is how it is done)
 # TODO: may need to associate job title with organization (make sure right section head)
 :Job_Title a air:Belief-rule;
     rdfs:comment "Discover recipient job title.";
@@ -102,65 +188,56 @@
         @forSome :employmentAssociation.
         [nc:PersonCurrentEmploymentAssociation :employmentAssociation].
         :employmentAssociation nc:Employee :RECEIVER;
-            nc:Employer :ORGANIZATION;
+            nc:Employer [nc:EntityOrganization :ORGANIZATION];
             nc:EmployeePositionName :JOB_TITLE.
     };
     air:then [
         air:assert [air:statement {:RECEIVER extern:job_title :JOB_TITLE.} ]
     ].
-      
+
 # establishing delegated agency-head request authority for purposes of (b)(7)
 :AgencyHead_Requestor_Authority a air:Belief-rule;
-    rdfs:comment "Discover whether recipient has agency-head equivalence.";
+    rdfs:comment "Discover whether recipient has record-requesting authority.";
     air:if {
-        # non-linked version (linked version needs code changes on demo end)
-        
-        #:REQUEST a ont:Disseminate;
-        #    ont:to :RECEIVER.
-        
-        # if both agency_head and receiver are employed by the same organization
-        :AGENCY_HEAD a nc:PersonType.
-        :RECEIVER a nc:PersonType.
-        @forSome :employmentAssociation.
-        [nc:PersonCurrentEmploymentAssociation :employmentAssociation].
-        @forSome :agencyHeadEmploymentAssociation.
-        [nc:PersonCurrentEmploymentAssociation :agencyHeadEmploymentAssociation].
-        :employmentAssociation nc:Employee :RECEIVER;
-            nc:Employer :ORGANIZATION.
-        :agencyHeadEmploymentAssociation nc:Employee :AGENCY_HEAD;
-            nc:Employer :ORGANIZATION;
-            
-        # and agency_head is an agency head
-            nc:EmployeePositionName "Agency Head".
-            
-        # and delegation exists
-        @forSome :authorityDelegation.
-        :authorityDelegation
-            extern:AuthorityDelegatedBy :AGENCY_HEAD;
-            extern:AuthorityDelegatedTo :RECEIVER;
-            extern:AuthorityDelegatedType "Agency Head Request".
-        
+        # linked version finally!
+        @forSome :pri_impl_rule.
+
+        :REQUEST a ont:Disseminate;
+            ont:by :SENDER;
+            ont:to :RECEIVER.
+
+        <http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/rules/40_FR_28948>
+            log:semantics :pri_impl_rule.
+
+        # bzy HACK gets around the "can't yet load NIEM directly" engineering artifact
+        @forSome :this_graph_uri, :this_graph.
+        rdfify:this_graph rdfify:uri :this_graph_uri.
+        :this_graph_uri log:semantics :this_graph.
+
+        ((:this_graph) (:pri_impl_rule)) air:justifies {:SENDER air:compliant-with pri_impl:40_FR_28948_PRIb7.}.
+
     };
     air:then [
-        air:assert [air:statement {:RECEIVER extern:5USC552a_b7_delegate_from :AGENCY_HEAD.} ]
+        air:assert [air:statement {:RECEIVER extern:40FR28948_PRIb7_delegate "TRUE".} ]
     ];
+    ## bzy HACK: force rule to run (air:else apparently shields this rule from running normally o_O)
     air:then [
         air:assert [air:statement {:RECEIVER air:compliant-with rdfify:FORCE_RULE_RUN.} ]
     ].
-    
+
 
 # begin adapted policy rules
 :init_b a air:Belief-rule;
 	air:if {
-		:REQUEST a ont:Disseminate;
+		:REQUEST a ont:Request, ont:Disseminate;
 		    ont:by :SENDER;
             ont:to :RECEIVER;
             ont:data :DOCUMENT.
-#		:SENDER log:includes { :S foaf:government_type pri:US_Federal_Agency. }.
+#		:SENDER log:includes { :S foaf:government_type ont:US_Federal_Agency. }.
 #		XXX Not converted to log:semantics or owl:Entails yet.
-#		:P a pri:US_Person.
+#		:P a ont:US_Person.
 		:SR a extern:RecordSystem.
-#		:INFO pri:contained_in :SR.
+#		:INFO ont:contained_in :SR.
 		};
 	air:then [air:rule :The_Privacy_Act_of_1974_5_USC_552a_b_c01].
 #	air:then [air:rule :PRI_b7_Head_of_Agency].
@@ -171,19 +248,58 @@
 	rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a (b) c01";
 	rdfs:comment "No agency shall disclose any record which is contained in a system of records by any means of communication to any person, or to another agency";
 	air:if {
-		:REQUEST ont:data :DOCUMENT.
+		# :REQUEST ont:data :DOCUMENT.
 		# TODO this is contrived, is there a more natural way to detect PII?
 		:DOCUMENT extern:DocumentSubjectPerson :P.
-		};	
+		};
 	air:then [
 		air:description ( "Because" :DOCUMENT " contains PII about " :P ", disclosure cannot be made except under specifically defined conditions. 5 USC 552a(b).");
 #		air:rule :DEBUG];
-		air:rule :The_Privacy_Act_of_1974_5_USC_552a_b7;];
+		air:rule :The_Privacy_Act_of_1974_5_USC_552a_b_c02;];
 #		air:rule :PRI_b7_Govt_Agency;];
 	air:else [
 		air:description ( "Because" :DOCUMENT " does not appear to contain PII or is not about a person, it is not covered by the Privacy Act. 5 USC 552a(b).");
 		air:assert [air:statement {:SENDER air:compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b_c01.}]].
-		
+
+:The_Privacy_Act_of_1974_5_USC_552a_b_c02 a air:Belief-rule;
+	rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a (b) c02";
+	rdfs:comment "No agency shall disclose any record which is contained in a system of records by any means of communication to any person, or to another agency, except pursuant to a written request by, or with the prior written consent of, the individual to whom the record pertains";
+	air:if {
+		@forSome :REQINFO.
+		:REQINFO a ont:Request;
+			ont:by :P;
+			ont:to :SENDER;
+			ont:data :DOCUMENT;
+			# Implicitly, this is a written request.
+			# ont:contains [a ont:Written_Request].
+		};
+	air:then [
+		air:description (:S " can give " :DOCUMENT " to " :P ", because" :P " made a written request and the record pertains to " :P ". 5 USC 552a(b).");
+		air:assert [air:statement {:S air:compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b_c02.}]];
+	air:else [
+		air:description (:DOCUMENT " about " :P " was not in requested in writing by " :P ". Compliant disclosure may be possible under other conditions. 5 USC 552a(b).");
+		air:rule :The_Privacy_Act_of_1974_5_USC_552a_b_c03].
+
+:The_Privacy_Act_of_1974_5_USC_552a_b_c03 a air:Belief-rule;
+	rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a (b) c03";
+	rdfs:comment "No agency shall disclose any record which is contained in a system of records by any means of communication to any person, or to another agency, except pursuant to a written request by, or with the prior written consent of, the individual to whom the record pertains";
+	air:if {
+		@forSome :CONSENT.
+		:CONSENT a ont:Event;
+			ont:by :P;
+			ont:to :SENDER;
+			ont:data :DOCUMENT;
+			ont:contains [a ont:Written_Consent].
+		:EVENT ont:antecedent :CONSENT.
+		};
+	air:then [
+		air:description (:S " can give " :DOCUMENT " to " :R ", because " :P " gave consent for the transaction and the record pertains to " :P ". 5 USC 552a(b).");
+		air:assert [air:statement {:S air:compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b_c03.}]];
+	air:else [
+		air:description (:P " did not give consent to use " :DOCUMENT " Compliant disclosure may be possible under other conditions. 5 USC 552a(b).");
+ 	        air:rule :The_Privacy_Act_of_1974_5_USC_552a_b7
+	].
+
 :The_Privacy_Act_of_1974_5_USC_552a_b7 a air:Belief-rule;
 	rdfs:label "The Privacy Act of 1974, 5 U.S.C. 552a (b)(7)";
 	rdfs:comment "No agency shall disclose any record which is contained in a system of records by any means of communication to any person, or to another agency, except pursuant to a written request by, or with the prior written consent of, the individual to whom the record pertains, unless disclosure of the record would be to another agency or to an instrumentality of any governmental jurisdiction within or under the control of the United States for a civil or criminal law enforcement activity if the activity is authorized by law, and if the head of the agency or instrumentality has made a written request to the agency which maintains the record specifying the particular portion desired and the law enforcement activity for which the record is sought";
@@ -195,11 +311,11 @@
 	    extern:SystemAuthorizationRole "Read".
 	    :SENDER foaf:member :SR_ORG.
 	    :SR nc:OrganizationParent :SR_ORG.
-	    
-	    
+
+
 	    # XXX Does this test want to be earlier?
-	    # K - yes, this should be an early belief rule to determine both 
-	    # :INFO is in an :SR; failure results in "not covered by the Privacy Act" (something we need to do later) 
+	    # K - yes, this should be an early belief rule to determine both
+	    # :INFO is in an :SR; failure results in "not covered by the Privacy Act" (something we need to do later)
 	    # :S is from the agency maintaining :SR; failure results in "not covered by the Privacy Act".
 	    };
 	air:then [
@@ -226,7 +342,7 @@
 	air:else [
             air:description (:RECEIVER " is not a member of a government agency or instrumentality of the type required by 5 USC 552a(b)(7).");
 	    air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
-	
+
 :PRI_b7_Law_Enforcement_Purpose a air:Belief-rule;
 	air:if{
 	    :REQUEST ont:purpose ont:law_enforcement.
@@ -238,7 +354,7 @@
 	air:else [
             air:description (:REQUEST " purpose does not match Law Enforcement, one of the requirements of 5 USC 552a(b)(7).");
 	    air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
-	
+
 :PRI_b7_Has_Title a air:Belief-rule;
 	air:if {
 	    :RECEIVER extern:job_title :JOB_TITLE.
@@ -250,7 +366,7 @@
 	air:else [
 	    air:description (:RECEIVER " has no job title.  Cannot evaluate whether" :R "is head of an organization, one of the requirements of 5 USC 552a(b)(7).");
 	    air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]].
-	    
+
 :PRI_b7_Head_of_Agency a air:Belief-rule;
 	air:if{
         :RECEIVER extern:job_title "Agency Head".
@@ -260,32 +376,20 @@
 		air:assert [air:statement {:SENDER air:compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]];
 	air:else [
 		air:description ( "Requestor" :RECEIVER "'s job title " :JOB_TITLE " does not match Agency Head, one of the requirements of 5 USC 552a(b)(7).");
-		air:rule :PRI_b7_Has_Delegation
+		air:rule :PRI_b7_Delegated_Head_of_Agency
 	]
 .
 
-:PRI_b7_Has_Delegation a air:Belief-rule;
-	air:if{
-    	:RECEIVER extern:5USC552a_b7_delegate_from :AGENCY_HEAD.
-	    };
-	air:then [
-		air:description (:RECEIVER " has authority delegated from " :AGENCY_HEAD " to file written requests for the purpose of 5 USC 552a(b)(7).");
-		air:rule :PRI_b7_Delegated_Head_of_Agency
-	];
-	air:else [
-    	air:description ( "Requestor" :RECEIVER " does not have appropriate authority delegated by the head of the recipient agency to file written requests for the purpose of 5 USC 552a(b)(7).");
-		air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]
-	].
-		
 :PRI_b7_Delegated_Head_of_Agency a air:Belief-rule;
+    rdfs:label "Privacy Act Implementation Guidelines and Responsibilities, 40 FR 28948";
+    rdfs:comment "Record-requesting authority may be delegated down to lower-level agency officials when necessary, but not below the 'section chief level.";
 	air:if{
-    	:RECEIVER extern:5USC552a_b7_delegate_from :AGENCY_HEAD.
+    	:RECEIVER extern:40FR28948_PRIb7_delegate "TRUE".
 	    };
 	air:then [
-		air:description (:SENDER " can give " :DOCUMENT " to " :RECEIVER ", because it is being used for an authorized law enforcement activity and an individual with appropriate authority delegated by the head of the recipient agency has filed the appropriate written request, meeting the requirements of 5 USC 552a(b)(7).");
+		air:description (:SENDER " can give " :DOCUMENT " to " :RECEIVER ", because it is being used for an authorized law enforcement activity and appropriate record-requesting authority has been delegated to " :RECEIVER ", meeting the standards in 40 Fed. Reg. 28948.");
 		air:assert [air:statement {:SENDER air:compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]];
 	air:else [
-	    # actually superfluous, will be caught by :PRI_b7_Has_Delegation in current form
-		air:description ( "Requestor" :RECEIVER " does not have appropriate authority delegated by the head of the recipient agency, and does not satisfy the requirements of 5 USC 552a(b)(7).");
+		air:description ( "Record-requesting authority has not been delegated to " :RECEIVER ", as required by 40 Fed. Reg. 28948.");
 		air:assert [air:statement {:SENDER air:non-compliant-with :The_Privacy_Act_of_1974_5_USC_552a_b7.}]
 		].

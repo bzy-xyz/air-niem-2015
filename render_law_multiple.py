@@ -56,8 +56,8 @@ _html_template_str = """
 <div class="irfac" id="td_1">
 <table><tr>
     <td> </td>
-    <td>Whether a dissemination of <a href="${data_uri}">${data_uri}</a> by <a
-    href="${by_uri}">${by_uri}</a> to <a href="${to_uri}">${to_uri}</a> is
+    <td>Whether a dissemination of <a href="${data_uri}">${data_text}</a> by <a
+    href="${by_uri}">${by_text}</a> to <a href="${to_uri}">${to_text}</a> is
     compliant with law?</td>
 </tr></table>
 </div>
@@ -71,7 +71,7 @@ _html_template_str = """
 <div class="irfac" id="td_2">
 <table><tr>
     <td> </td>
-    <td>The issue will be decided under <a href="${rule_uri}">${rule_uri}</a></td>
+    <td>The issue will be decided under <a href="${rule_uri}">${rule_text}</a></td>
 </tr></table>
 </div>
 
@@ -419,6 +419,10 @@ def render_law(justifications = None, uri = None, policy = None):
         'to_uri': to_uri,
         'data_uri': data_uri,
         'rule_uri': rule_uri,
+        'by_text': url_to_canonical_name(by_uri).split("#")[-1],
+        'to_text': url_to_canonical_name(to_uri).split("#")[-1],
+        'data_text': url_to_canonical_name(data_uri).split("#")[-1],
+        'rule_text': url_to_canonical_name(rule_uri).split("#")[-1],
     }
 
     return _html_template.substitute(substitutions_outer)

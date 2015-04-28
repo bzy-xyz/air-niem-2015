@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
-<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/">
+<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/">
 
     <nc:Organization s:id="OrgDHS">
         <nc:OrganizationName>
             Department of Homeland Security
         </nc:OrganizationName>
-    
+
         <nc:OrganizationSubUnit s:id="OrgDHSICE" />
-        
+
         <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
     </nc:Organization>
-    
+
     <!-- DHS Immigration and Customs Enforcement -->
     <nc:Organization s:id="OrgDHSICE">
         <nc:OrganizationName>
             Immigration and Customs Enforcement
         </nc:OrganizationName>
-        
+
         <nc:OrganizationParent s:id="OrgDHS" />
-        
+
         <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
     </nc:Organization>
-    
+
     <extern:RecordSystem s:id="RecordSystemDHSICE">
         <nc:SystemName>DHS ICE System of Records</nc:SystemName>
         <nc:OrganizationParent s:id="OrgDHSICE" />
@@ -35,10 +35,12 @@
             <nc:PersonFullName>Fred Ral Agenti</nc:PersonFullName>
         </nc:PersonName>
     </nc:Person>
-    
+
     <nc:PersonCurrentEmploymentAssociation>
         <nc:Employee s:id="PersonFeddyAgenti" />
-        <nc:Employer s:id="OrgDHSICE" />
+        <nc:Employer>
+            <nc:EntityOrganization s:id="OrgDHSICE" />
+        </nc:Employer>
         <nc:EmployeePositionName>Special Agent</nc:EmployeePositionName>
         <nc:EmploymentStatus>
             <nc:StatusText>Active</nc:StatusText>
@@ -47,13 +49,13 @@
             </nc:StatusDateRange>
         </nc:EmploymentStatus>
     </nc:PersonCurrentEmploymentAssociation>
-    
+
     <extern:SystemAuthorization>
         <extern:SystemAuthorizationSubject s:id="PersonFeddyAgenti" />
         <extern:SystemAuthorizationObject s:id="RecordSystemDHSICE" />
         <extern:SystemAuthorizationRole>Read</extern:SystemAuthorizationRole>
         <extern:SystemAuthorizationRole>Write</extern:SystemAuthorizationRole>
     </extern:SystemAuthorization>
-    
+
 
 </extern:PersonnelRecord>

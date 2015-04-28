@@ -1,0 +1,45 @@
+.main {
+  width:80%;
+  padding:2px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.box {
+  border:solid 1px;
+  margin:2px;
+  padding:.5em;
+}
+
+table {
+  width: 100%;
+}
+
+/*  Some style from Tabulator
+
+body {background-color: white ; font-size: 80%; font-family: sans-serif}
+
+/* Pane icons: */
+.paneShown{ -moz-border-radius: 0.5em;
+            border-top:         solid #222 1px; 
+            border-left:        solid #222 0.1em; border-bottom: solid #eee 0.1em;
+            border-right:       solid #eee 0.1em; 
+            margin-left:        1em; padding: 3px;
+            background-color:   #ffd; }
+            
+.paneHidden { -moz-border-radius: 0.5em; margin-left: 1em; padding: 3px;  }
+
+div.title {
+    background-color: #B8B8B8; 
+    border-top: solid 1px #545454;
+    border-bottom: solid 1px #545454;
+    padding: 0.5em;
+}
+
+div.irfac {
+    padding: 0.7em;
+}
+
+li.irfac_li{ 
+    margin-bottom: 10px; 
+}

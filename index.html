@@ -239,7 +239,7 @@
       var show_log = $('#print_log').attr('checked');
 	  	
   
-      var kb = "http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/contrib/dhs_kb.n3" 
+      var kb = "http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/contrib/dhs_kb.n3" 
       var log = "use_tabulator="+should_tabulator+"&by="+escape(sender)+"&to="+escape(recipient)+"&data="+escape(document)+"&rulesFile="+escape(policy)+"&logFile="+escape(kb)+"&reasoner="+escape($("#reasonerbox").val())+"&show_timings="+show_timings+"&show_memory="+show_memory+"&runs="+runs+"&print_log="+show_log;
       var policyrunner = "./dhs_air_integrated.py"; // relative to this page
       

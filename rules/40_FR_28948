@@ -1,0 +1,121 @@
+###
+# This is an AIR encoding of 40 Fed. Reg. 28948.
+
+
+########Namespaces########
+
+#Default Namespace
+@prefix : <http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/rules/40_FR_28948#>.
+
+#rules is an alias for :
+@prefix rules: <#>.
+
+#AIR
+@prefix air: <http://dig.csail.mit.edu/TAMI/2007/amord/air#>.
+
+#owl
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+#log
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+#FOAF
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+
+#RDFS
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+#5USC552a
+@prefix pri: <http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/rules/5_USC_552a_ONT#>.
+
+#40FR28948
+# doesn't actually exist yet but we can still make a namespace
+@prefix pri_impl: <http://link.csail.mit.edu/projects/devel/2015/air-demo-dhs-devel/US/DHS/rules/40_FedReg_28948_ONT#>.
+
+# rdfify
+@prefix rdfify: <http://dig.csail.mit.edu/2014/rdfify/schema#> .
+
+# Fusion center ontology
+@prefix fusion: <http://dig.csail.mit.edu/2010/DHS-fusion/common/fusion_ONT#>.
+
+# NIEM Core
+@prefix nc: <http://release.niem.gov/niem/niem-core/3.0/> .
+
+# extern namespace
+@prefix extern: <http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/> .
+
+
+### Metadata ###
+## bzy: adding metadata to support shortname condensation
+<>
+    rdfs:label "Privacy Act Implementation Guidelines and Responsibilities, 40 Fed. Reg. 28948".
+
+# Globals
+
+@forAll :S, :P, :INFO, :DATA, :DOC-DATA, :EVENT, :R, :SR.
+@forAll :SENDER, :RECEIVER, :MEMBERSHIP, :JOB_TITLE, :PURPOSE, :CONTAINS.
+@forAll :ORGANIZATION.
+
+:40_FR_28948 a air:Policy;
+    rdfs:label "Privacy Act Implementation Guidelines and Responsibilities, 40 Fed. Reg. 28948";
+    air:rule :40_FR_28948_init;
+
+    ## bzy required for standalone run of rule to work, otherwise complains about "no base path"
+    fusion:transaction_ontology "http://dig.csail.mit.edu/2010/DHS-fusion/US/DHS/rules/5_USC_552a_ONT".
+
+:40_FR_28948_init a air:Belief-rule;
+    rdfs:label "Initializer for the Privacy Act implementation guidelines implementation";
+    rdfs:comment "Guidelines for implementing Section 3 of the Privacy Act of 1974 (5 U.S.C. 552a, P.L. 93-579) pursuant to OMB Circular No. A-108 dated July 1, 1975. These guidelines were developed to assist agencies in complying with the Act in an effective and timely manner";
+    air:if {
+        # set up our environment so we can reason
+        :EVENT a pri:Disseminate;
+			pri:by :SENDER;
+			pri:to :RECEIVER.
+    };
+    air:then
+    # bzy:
+    # in a full implementation we would call out to lots of other things
+    # besides the PRIb7 thing, but we don't have a full implementation so there
+    [
+        air:rule :40_FR_28948_PRIb7
+    ].
+
+:40_FR_28948_PRIb7 a air:Belief-rule;
+    rdfs:label "40 Fed. Reg. 28948 - Implementation guidelines governing section (b)(7) of the Privacy Act";
+    rdfs:comment "Record-requesting authority may be delegated down to lower-level agency officials when necessary, but not below the 'section chief' level.";
+
+    air:if {
+
+        # discover and set up a call to a linked rule
+        # allowing the recipient agency to assert that "delegation exists"
+
+        # we assume that the head of the recipient agency has published guidelines
+        # detailing which roles are authorized to make requests
+
+        # discover where these guidelines are
+
+        :RECEIVER a nc:PersonType.
+        @forSome :employmentAssociation.
+        [nc:PersonCurrentEmploymentAssociation :employmentAssociation].
+        :employmentAssociation nc:Employee :RECEIVER;
+            nc:Employer [nc:EntityOrganization :ORGANIZATION].
+
+        @forSome :local_policy_uri, :local_policy.
+        :ORGANIZATION extern:PRIb7Policy :local_policy_uri.
+        :local_policy_uri log:semantics :local_policy.
+
+        # bzy HACK gets around the "can't yet load NIEM directly" engineering artifact
+        @forSome :this_graph_uri, :this_graph.
+        rdfify:this_graph rdfify:uri :this_graph_uri.
+        :this_graph_uri log:semantics :this_graph.
+
+        # then call out to them
+
+        ((:this_graph) (:local_policy)) air:justifies {:RECEIVER air:compliant-with pri_impl:40_FR_28948_PRIb7_requestor}.
+
+    };
+    air:then
+    [
+        air:description ( "Record-requesting authority was delegated to " :RECEIVER ", and so " :SENDER " can give the requested document to " :RECEIVER " provided the other conditions of 5 USC 552a (b)(7) are met." );
+        air:assert [air:statement { :SENDER air:compliant-with :40_FR_28948_PRIb7. }]
+    ].

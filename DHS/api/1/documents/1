@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<extern:DocumentRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/">
+<extern:DocumentRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/">
 
     <nc:Person s:id="PersonBobbyBadGuy">
         <nc:PersonName>

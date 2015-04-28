@@ -88,6 +88,11 @@ _rdfs_prefix = "http://www.w3.org/2000/01/rdf-schema"
 _air_prefix = "http://dig.csail.mit.edu/TAMI/2007/amord/air"
 _fusion_prefix = "http://dig.csail.mit.edu/2010/DHS-fusion/common/fusion_ONT"
 
+_rdfify_prefix = "http://dig.csail.mit.edu/2014/rdfify/schema"
+
+# bzy HACK HACK HACK hardcode extern prefix (for miscellany)
+_extern_prefix = "http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/"
+
 _see_also_predicate = "%s#seeAlso" % _rdfs_prefix
 _label_predicate = "%s#label" % _rdfs_prefix
 
@@ -243,6 +248,7 @@ def generate_log(by_uri, to_uri, data_uri, policy_uri,
     
     g = rdflib.Graph()
     g.bind("","http://dig.csail.mit.edu/2010/DHS-fusion/common/fusion_ONT#")
+    g.bind("rdfify","{0}#".format(_rdfify_prefix))
     
     trans = rdflib.URIRef(_transaction_uri)
     
@@ -257,7 +263,7 @@ def generate_log(by_uri, to_uri, data_uri, policy_uri,
     g.add((rdflib.URIRef(to_uri), rdflib.URIRef(_label_predicate), rdflib.Literal(to_label)))
     g.add((rdflib.URIRef(data_uri), rdflib.URIRef(_label_predicate), rdflib.Literal(data_label)))
     
-    g2, s = merge.merge([by_uri, to_uri, data_uri], ["http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/xsd/niem/niem-core/3.0/niem-core.xsd"])
+    g2, s = merge.merge([by_uri, to_uri, data_uri], ["http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/xsd/niem/niem-core/3.0/niem-core.xsd"])
     
     stmp = tempfile.NamedTemporaryFile()
     gtmp = tempfile.NamedTemporaryFile()
@@ -271,7 +277,27 @@ def generate_log(by_uri, to_uri, data_uri, policy_uri,
     g.parse(stmp.name, format='n3')
     g.parse(gtmp.name, format='n3')
     
-    return g.serialize(format='n3')
+    g2tmp = tempfile.NamedTemporaryFile(delete=False)
+    
+    g.add((rdflib.URIRef("{0}#this_graph".format(_rdfify_prefix)), rdflib.URIRef("{0}#uri".format(_rdfify_prefix)), rdflib.URIRef("file://{0}".format(g2tmp.name))))
+    
+    ## bzy HACK HACK HACK HACK HACK
+    ## cwm gives us no way to up-cast URIs from strings
+    ## so we have to do it the slow way ...
+    to_remove = set()
+    for s, p, o in g.triples((None, rdflib.URIRef("{0}PRIb7Policy".format(_extern_prefix)), None)):
+        if isinstance(o, rdflib.Literal):
+            to_remove.add((s, p, o))
+            g.add((s, p, rdflib.URIRef(o.value)))
+    for t in to_remove:
+        g.remove(t)
+    
+    gstr = g.serialize(format='n3')
+    
+    g2tmp.write(gstr)
+    g2tmp.flush()
+    
+    return gstr
     
 
 def format_headers(content_type, content):

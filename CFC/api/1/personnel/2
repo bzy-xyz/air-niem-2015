@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
-<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/">
+<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/">
 
     <nc:Organization s:id="OrgCommonwealthFusionCenter">
         <nc:OrganizationName>
             Commonwealth Fusion Center
         </nc:OrganizationName>
         <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
+        <extern:PRIb7Policy>http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/CFC/api/1/rules/PRIb7Policy</extern:PRIb7Policy>
     </nc:Organization>
 
     <nc:Person s:id="PersonMattTechnica">

@@ -1,3 +1,5 @@
 var policies = [
-  {name:"US 5_USC_552a (truncated)", uri:"http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/rules/FakeDHSResponseRule.n3"},
-]                                                 
+  {name:"US 5_USC_552a", uri:"http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/rules/FakeDHSResponseRule.n3"},
+  {name:"US 40_Fed_Reg_28948", uri:"http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/rules/40_FR_28948"},
+  {name:"MA Agency Head Authority Delegation", uri:"http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/CFC/api/1/rules/PRIb7Policy"},
+]

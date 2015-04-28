@@ -1,6 +1,6 @@
 var receivers = [
-  {name:"Mia Analysa", email:"mia@cfc.mass.gov", uri:"http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/CFC/api/1/personnel/1#PersonMiaAnalysa"},
+  {name:"Mia Analysa", email:"mia@cfc.mass.gov", uri:"http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/CFC/api/1/personnel/1#PersonMiaAnalysa"},
   
-  {name:"Matt Technica", email:"matt@cfc.mass.gov", uri:"http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/CFC/api/1/personnel/2#PersonMattTechnica"},
+  {name:"Matt Technica", email:"matt@cfc.mass.gov", uri:"http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/CFC/api/1/personnel/2#PersonMattTechnica"},
 
 ]

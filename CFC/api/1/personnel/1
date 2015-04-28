@@ -1,14 +1,57 @@
 <?xml version="1.0"?>
-<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/prod/2015/air-niem-compatibility/extern/">
+<extern:PersonnelRecord xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/" xmlns:s="http://release.niem.gov/niem/structures/3.0/" xmlns:extern="http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/extern/">
 
     <nc:Organization s:id="OrgCommonwealthFusionCenter">
+        <nc:OrganizationLocation>
+            <nc:Address>
+                <nc:AddressFullText>124 Acton Street</nc:AddressFullText>
+                <nc:LocationCityName>Maynard</nc:LocationCityName>
+                <nc:LocationStateName>MA</nc:LocationStateName>
+                <nc:LocationCountryName>USA</nc:LocationCountryName>
+                <nc:LocationPostalCode>01754</nc:LocationPostalCode>
+            </nc:Address>
+            <nc:Location2DGeospatialCoordinate>
+                <nc:GeographicCoordinateLatitude>
+                    <nc:LatitudeDegreeValue>42</nc:LatitudeDegreeValue>
+                    <nc:LatitudeMinuteValue>25</nc:LatitudeMinuteValue>
+                    <nc:LatitudeSecondValue>57</nc:LatitudeSecondValue>
+                </nc:GeographicCoordinateLatitude>
+                <nc:GeographicCoordinateLongitude>
+                    <nc:LongitudeDegreeValue>-71</nc:LongitudeDegreeValue>
+                    <nc:LongitudeMinuteValue>27</nc:LongitudeMinuteValue>
+                    <nc:LongitudeSecondValue>21</nc:LongitudeSecondValue>
+                </nc:GeographicCoordinateLongitude>
+            </nc:Location2DGeospatialCoordinate>
+        </nc:OrganizationLocation>
         <nc:OrganizationName>
             Commonwealth Fusion Center
         </nc:OrganizationName>
         <extern:IsGovernmentAgency>TRUE</extern:IsGovernmentAgency>
+        <extern:PRIb7Policy>http://link.csail.mit.edu/projects/devel/2015/air-niem-compatibility-revised/CFC/api/1/rules/PRIb7Policy</extern:PRIb7Policy>
     </nc:Organization>
-    
+
     <nc:Organization s:id="OrgMassStatePolice">
+        <nc:OrganizationLocation>
+            <nc:Address>
+                <nc:AddressFullText>124 Acton Street</nc:AddressFullText>
+                <nc:LocationCityName>Maynard</nc:LocationCityName>
+                <nc:LocationStateName>MA</nc:LocationStateName>
+                <nc:LocationCountryName>USA</nc:LocationCountryName>
+                <nc:LocationPostalCode>01754</nc:LocationPostalCode>
+            </nc:Address>
+            <nc:Location2DGeospatialCoordinate>
+                <nc:GeographicCoordinateLatitude>
+                    <nc:LatitudeDegreeValue>42</nc:LatitudeDegreeValue>
+                    <nc:LatitudeMinuteValue>25</nc:LatitudeMinuteValue>
+                    <nc:LatitudeSecondValue>57</nc:LatitudeSecondValue>
+                </nc:GeographicCoordinateLatitude>
+                <nc:GeographicCoordinateLongitude>
+                    <nc:LongitudeDegreeValue>-71</nc:LongitudeDegreeValue>
+                    <nc:LongitudeMinuteValue>27</nc:LongitudeMinuteValue>
+                    <nc:LongitudeSecondValue>21</nc:LongitudeSecondValue>
+                </nc:GeographicCoordinateLongitude>
+            </nc:Location2DGeospatialCoordinate>
+        </nc:OrganizationLocation>
         <nc:OrganizationName>
             Massachusetts State Police
         </nc:OrganizationName>
@@ -21,12 +64,57 @@
             <nc:PersonSurName>Analysa</nc:PersonSurName>
             <nc:PersonFullName>Mia Analysa</nc:PersonFullName>
         </nc:PersonName>
+        <nc:PersonDigitalImage>
+            <nc:BinaryURI>http://dig.csail.mit.edu/2010/DHS-fusion/MA/profiles/mia.jpg</nc:BinaryURI>
+        </nc:PersonDigitalImage>
+        <nc:PersonSexText>F</nc:PersonSexText>
     </nc:Person>
-    
+
     <nc:PersonCurrentEmploymentAssociation>
         <nc:Employee s:id="PersonMiaAnalysa" />
-        <nc:Employer s:id="OrgCommonwealthFusionCenter" />
+        <nc:Employer>
+            <nc:EntityOrganization s:id="OrgCommonwealthFusionCenter" />
+        </nc:Employer>
         <nc:EmployeePositionName>Intelligence Analyst</nc:EmployeePositionName>
+        <nc:EmploymentLocation>
+            <nc:Address>
+                <nc:AddressFullText>124 Acton Street</nc:AddressFullText>
+                <nc:LocationCityName>Maynard</nc:LocationCityName>
+                <nc:LocationStateName>MA</nc:LocationStateName>
+                <nc:LocationCountryName>USA</nc:LocationCountryName>
+                <nc:LocationPostalCode>01754</nc:LocationPostalCode>
+            </nc:Address>
+            <nc:Location2DGeospatialCoordinate>
+                <nc:GeographicCoordinateLatitude>
+                    <nc:LatitudeDegreeValue>42</nc:LatitudeDegreeValue>
+                    <nc:LatitudeMinuteValue>25</nc:LatitudeMinuteValue>
+                    <nc:LatitudeSecondValue>57</nc:LatitudeSecondValue>
+                </nc:GeographicCoordinateLatitude>
+                <nc:GeographicCoordinateLongitude>
+                    <nc:LongitudeDegreeValue>-71</nc:LongitudeDegreeValue>
+                    <nc:LongitudeMinuteValue>27</nc:LongitudeMinuteValue>
+                    <nc:LongitudeSecondValue>21</nc:LongitudeSecondValue>
+                </nc:GeographicCoordinateLongitude>
+            </nc:Location2DGeospatialCoordinate>
+        </nc:EmploymentLocation>
+        <nc:EmploymentStatus>
+            <nc:StatusText>Active</nc:StatusText>
+            <nc:StatusDateRange>
+                <nc:StartDate>2012-03-04</nc:StartDate>
+            </nc:StatusDateRange>
+        </nc:EmploymentStatus>
+        <extern:EmployeePayGradeLevel>M-XI</extern:EmployeePayGradeLevel>
+    </nc:PersonCurrentEmploymentAssociation>
+
+    <nc:PersonCurrentEmploymentAssociation>
+        <nc:Employee s:id="PersonMiaAnalysa" />
+        <nc:Employer>
+            <nc:EntityOrganization s:id="OrgMassStatePolice" />
+        </nc:Employer>
+        <nc:EmployeePositionName>Intelligence Analyst</nc:EmployeePositionName>
+        <nc:EmploymentContactInformation>
+            <nc:ContactEmailID>mia@msp.MASS.gov</nc:ContactEmailID>
+        </nc:EmploymentContactInformation>
         <nc:EmploymentStatus>
             <nc:StatusText>Active</nc:StatusText>
             <nc:StatusDateRange>
@@ -34,53 +122,6 @@
             </nc:StatusDateRange>
         </nc:EmploymentStatus>
     </nc:PersonCurrentEmploymentAssociation>
-    
-    <nc:PersonCurrentEmploymentAssociation>
-        <nc:Employee s:id="PersonMiaAnalysa" />
-        <nc:Employer s:id="OrgMassStatePolice" />
-        <nc:EmployeePositionName>Intelligence Analyst</nc:EmployeePositionName>
-        <nc:EmploymentStatus>
-            <nc:StatusText>Active</nc:StatusText>
-            <nc:StatusDateRange>
-                <nc:StartDate>2012-03-04</nc:StartDate>
-            </nc:StatusDateRange>
-        </nc:EmploymentStatus>
-    </nc:PersonCurrentEmploymentAssociation>
-    
-    <!-- 
-    
-    Following lines deal with authority delegation. 
-    Because of limitations with the XML node reference mechanism,
-    relevant profile information for the agency head MUST be included here
-    to allow the authority delegation to be computed as valid.
-    
-    -->
-    
-    <nc:Person s:id="PersonAgencyHead">
-        <nc:PersonName>
-            <nc:PersonGivenName>Aegea</nc:PersonGivenName>
-            <nc:PersonSurName>Heathrow</nc:PersonSurName>
-            <nc:PersonFullName>Aegea Heathrow</nc:PersonFullName>
-        </nc:PersonName>
-    </nc:Person>
-    
-    <nc:PersonCurrentEmploymentAssociation>
-        <nc:Employee s:id="PersonAgencyHead" />
-        <nc:Employer s:id="OrgCommonwealthFusionCenter" />
-        <nc:EmployeePositionName>Agency Head</nc:EmployeePositionName>
-        <nc:EmploymentStatus>
-            <nc:StatusText>Active</nc:StatusText>
-            <nc:StatusDateRange>
-                <nc:StartDate>2011-02-03</nc:StartDate>
-            </nc:StatusDateRange>
-        </nc:EmploymentStatus>
-    </nc:PersonCurrentEmploymentAssociation>
-    
-    <extern:AuthorityDelegation>
-        <extern:AuthorityDelegatedBy s:id="PersonAgencyHead" />
-        <extern:AuthorityDelegatedTo s:id="PersonMiaAnalysa" />
-        <extern:AuthorityDelegatedType>Agency Head Request</extern:AuthorityDelegatedType>
-    </extern:AuthorityDelegation>
-    
+
 
 </extern:PersonnelRecord>
